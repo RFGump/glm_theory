@@ -3,7 +3,6 @@ An Introduction to GLM Theory
 author: Michael Nielsen
 date: October 2017
 autosize: true
-transition: none
 
 Goals of Modeling
 ========================================================
@@ -151,4 +150,98 @@ $$
 
 Ordinary Least Squares
 ========================================================
+
+
+Advantages
+* Only one assumption -- The mean model has a known linear form
+* Solve for parameters using calculus methods
+* Simple, closed form solution
+
+Disadvantages
+* A mathematical method, not a statistical method
+* Can't make inferences without a probability distribution
+
+Normal Distribution
+========================================================
+
+```{r, echo=F, fig.show='hold'}
+norm.plot <- function(var){
+  plot(seq(5,35,.1), dnorm(seq(5,35,.1), 20, 1), type='n', xlab='', ylab='')
+  lines(seq(5,35,.1), dnorm(seq(5,35,.1), 20, sqrt(var)),col='red')
+}
+
+norm.plot(20)
+norm.plot(5)
+norm.plot(1)
+```
+
+Binomial Proportion Distribution
+========================================================
+$X=\frac{0}{n}, \frac{1}{n}, \frac{2}{n}, ... , 1$  
+  $n=\text{Number of trials}$  
+  $\pi = P(\text{Success})$  
+
+
+$E(X) = \pi$  
+$var(X) = \frac{\pi(1-\pi)}{n}$  
+
+***
+
+```{r, echo=F}
+bin.plot <- function(n1){
+  plot(seq(0,n1,1)/n1, 
+       dbinom(seq(0,n1,1),n1,.2),
+       type='h',
+       col='red',
+       xlab='', ylab='', bty='n')
+  title(main=paste('n = ', n1))
+}
+
+bin.plot(5)
+```
+
+Binomial Proportion Distribution
+========================================================
+
+***
+
+```{r, echo=F}
+bin.plot(10)
+```
+
+Binomial Proportion Distribution
+========================================================
+
+***
+
+```{r, echo=F}
+bin.plot(20)
+```
+
+Binomial Proportion Distribution
+========================================================
+
+***
+
+```{r, echo=F}
+bin.plot(40)
+  lines(seq(0,40,.01)/40,
+        dnorm(seq(0,40,.01),8,sqrt(40*.2*.8)),
+        col='blue')
+```
+
+Poisson Distribution
+========================================================
+
+$X = 0, 1, 2, ...$   
+$E(X)=\lambda$  
+$var(X) = \lambda$  
+
+***
+```{r, echo=F}
+plot(seq(0,20,1),
+     dpois(seq(0,20,1), 0.5),
+     type='h', col='red', bty='n')
+title(main='Poisson (mean = 0.5)')
+```
 
