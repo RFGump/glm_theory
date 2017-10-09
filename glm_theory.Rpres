@@ -241,7 +241,46 @@ $var(X) = \lambda$
 ```{r, echo=F}
 plot(seq(0,20,1),
      dpois(seq(0,20,1), 0.5),
-     type='h', col='red', bty='n')
+     type='h', col='red', bty='n', xlab='', ylab='')
 title(main='Poisson (mean = 0.5)')
 ```
 
+Poisson Distribution
+========================================================
+```{r, echo=F}
+plot(seq(0,20,1),
+     dpois(seq(0,20,1), 2),
+     type='h', col='red', bty='n', xlab='', ylab='')
+title(main='Poisson (mean = 2)')
+```
+***
+```{r, echo=F}
+plot(seq(0,20,1),
+     dpois(seq(0,20,1), 5),
+     type='h', col='red', bty='n', xlab='', ylab='')
+title(main='Poisson (mean = 5)')
+```
+
+Poisson Distribution
+========================================================
+```{r, echo=F}
+plot(seq(0,20,1),
+     dpois(seq(0,20,1), 10),
+     type='h', col='red', bty='n', xlab='', ylab='')
+  title(main='Poisson (mean = 10)')
+  lines(seq(0,20,.001),
+        dnorm(seq(0,20,.001),10 , sqrt(10)),
+        type='l', col='blue')
+```
+
+Gamma Distribution
+========================================================
+```{r, echo=F}
+plot(seq(0,80,.001),
+     dgamma(seq(0,80,.001),shape=1/.1, scale=20*.1),
+     type='n', xlab='', ylab='', bty='n')
+lines(seq(0,80,.001),
+      dgamma(seq(0,80,.001),shape=1/1, scale=20*1),
+      col='red')
+title(main=expression(1/alpha==1))
+```
