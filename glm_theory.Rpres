@@ -1,0 +1,154 @@
+An Introduction to GLM Theory
+========================================================
+author: Michael Nielsen
+date: October 2017
+autosize: true
+transition: none
+
+Goals of Modeling
+========================================================
+
+- *Understanding* the relationships between variables
+
+- *Estimating* unkown parameters
+
+- *Predicting* the value of one variable, given a set of known predictor variables
+
+Definitions
+========================================================
+
+$Y =$ Response Variable
+* aka Target Variable, Dependent Variable
+ 
+$X_1, X_2, ... =$ Predictor Variables  
+* aka Explanatory Variables, Independent Variables  
+* Factor - a categorical predictor  
+  + Dummy Variable - an indicator to represent the presence/absence of a categorical variable  
+* Covariate/Variate - a continuous predictor  
+    
+Covariate Profile
+
+Understanding Dependence
+========================================================
+
+Scatterplots
+
+***
+
+```{r, echo=F}
+set.seed(12345)
+
+a <- 2.32
+b <- -1.86
+
+x <- rnorm(100,5,1)
+y <- a + b*x + rnorm(100,0,1.5)
+
+plot(x,y, bty='n')
+```
+
+Understanding Dependence
+========================================================
+
+Scatterplots
+
+Correlation
+
+```{r}
+cor(x,y)
+```
+
+***
+
+```{r, echo=F}
+plot(x,y, bty='n')
+```
+
+Understanding Dependence
+========================================================
+
+Scatterplots
+
+Correlation
+
+```{r}
+cor(x,y)
+```
+
+Mean Functions
+
+$$
+  \begin{aligned}
+    E(Y|X=x) &= f(x) \\
+             &= 2.32 - 1.86x
+  \end{aligned}
+$$
+
+***
+
+```{r, echo=F}
+slr <- lm(y~x)
+
+plot(x,y, bty='n')
+abline(a=slr$coefficients[1], b=slr$coefficients[2], col='red')
+
+```
+
+
+Ordinary Least Squares
+========================================================
+
+Minimize the total squared error
+
+$$
+  \sum_{i=1}^n [y_i -(\beta_0 + \beta_1 x_i)]^2 \\
+  = \sum_{i=1}^n (y_i - \hat{y}_i)^2
+$$
+
+***
+
+```{r, echo=F}
+x <- c(2, 4, 5)
+y <- c(-3, -1, -9)
+slr <- lm(y~x)
+y.hat <- fitted(slr)
+
+plot(c(1,6),c(2,-10),xlab='', ylab='', type='n', bty='n')
+  points(x, y)
+  abline(a=slr$coef[1], b=slr$coef[2], col='red')
+  segments(x0=x, y0=y, x1=x, y1=y.hat, lty=2)
+
+```
+
+What kind of models are linear?
+========================================================
+
+Generic linear model:
+
+$$
+\begin{aligned}
+  y &= \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p \\
+    &= \textbf{x}_i^T \beta
+\end{aligned}
+$$
+
+Examples:
+$$
+\begin{aligned}
+  y &= \beta_0 + \beta_1 x_1 + \beta_2 x_1^2 \\
+  y &= \beta_0 \beta_1^{x_1} \beta_2^{x_2} \implies
+    ln(y) = ln(\beta_0) + x_1 ln(\beta_1) + + x_2 ln(\beta_2) \\
+  y &= \beta_1 e^{\beta_2 x_2} + \beta_3 e^{\beta_4 x_4} \implies
+    \text{not linear}
+\end{aligned}
+$$
+
+$$
+ln(\text{Pure Premium}) = \text{base} + \beta_1 \text{Cov A} +
+  \beta_2 \text{Tier} +
+  \cdots
+$$
+
+Ordinary Least Squares
+========================================================
+
