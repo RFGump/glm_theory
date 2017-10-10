@@ -239,48 +239,128 @@ $var(X) = \lambda$
 
 ***
 ```{r, echo=F}
-plot(seq(0,20,1),
-     dpois(seq(0,20,1), 0.5),
-     type='h', col='red', bty='n', xlab='', ylab='')
-title(main='Poisson (mean = 0.5)')
+poi.plot <- function(m){
+  plot(seq(0,20,1),
+       dpois(seq(0,20,1), m),
+       type='h', col='red', bty='n', xlab='', ylab='')
+  title(main=paste('Poisson (mean = ',m,')', sep=''))
+}
+
+poi.plot(.5)
+
 ```
 
 Poisson Distribution
 ========================================================
 ```{r, echo=F}
-plot(seq(0,20,1),
-     dpois(seq(0,20,1), 2),
-     type='h', col='red', bty='n', xlab='', ylab='')
-title(main='Poisson (mean = 2)')
+poi.plot(2)
 ```
+
 ***
+
 ```{r, echo=F}
-plot(seq(0,20,1),
-     dpois(seq(0,20,1), 5),
-     type='h', col='red', bty='n', xlab='', ylab='')
-title(main='Poisson (mean = 5)')
+poi.plot(5)
 ```
 
 Poisson Distribution
 ========================================================
 ```{r, echo=F}
-plot(seq(0,20,1),
-     dpois(seq(0,20,1), 10),
-     type='h', col='red', bty='n', xlab='', ylab='')
-  title(main='Poisson (mean = 10)')
+poi.plot(10)
   lines(seq(0,20,.001),
-        dnorm(seq(0,20,.001),10 , sqrt(10)),
-        type='l', col='blue')
+    dnorm(seq(0,20,.001),10 , sqrt(10)),
+    type='l', col='blue')
 ```
 
 Gamma Distribution
 ========================================================
 ```{r, echo=F}
-plot(seq(0,80,.001),
-     dgamma(seq(0,80,.001),shape=1/.1, scale=20*.1),
-     type='n', xlab='', ylab='', bty='n')
-lines(seq(0,80,.001),
-      dgamma(seq(0,80,.001),shape=1/1, scale=20*1),
-      col='red')
-title(main=expression(1/alpha==1))
+gam.plot<-function(a){
+  plot(seq(0,80,.001),
+       dgamma(seq(0,80,.001),shape=10, scale=20/10),
+       type='n', xlab='', ylab='', bty='n')
+    lines(seq(0,80,.001),
+          dgamma(seq(0,80,.001),shape=a, scale=20/a),
+          col='red')
+    title(main=bquote(alpha==.(a)))
+}
+
+gam.plot(1)
 ```
+
+
+Gamma Distribution
+========================================================
+```{r, echo=F}
+gam.plot(2)
+```
+
+Gamma Distribution
+========================================================
+```{r, echo=F}
+gam.plot(4)
+```
+
+Gamma Distribution
+========================================================
+```{r, echo=F}
+gam.plot(10)
+lines(seq(0,80,.001),
+      dnorm(seq(0,80,.001),20, sqrt(40)),
+      col='blue')
+```
+
+
+Normal Linear Model
+========================================================
+
+Assumptions:  
+
+$$
+  y_i \gets Y_i \: indep \sim N(\mu_i, \sigma^2) \\
+  \mu_i = x_i^T \beta
+$$
+
+Alternative specification:
+
+$$
+  y_i \gets Y_i = x_i^T \beta + E_i \\
+  E_i \: indep \sim N(0, \sigma^2)
+$$
+
+Normal Linear Model - Solving for coefficients
+========================================================
+
+## Maximum Likelihood Estimates (MLS)
+* Select parameter values that are "most likely" to produce the observed data
+
+## Least Squares Estimates (LSE)
+* Under normality assumption, LSE = MLE
+* Even without normality, LSE has lowest variance among all possible linear unbiased estimators
+
+Generalized Linear Model
+========================================================
+
+Assumptions:
+
+$$
+  y_i \gets Y_i \: indep \sim EF(\mu_i, \phi) \\
+  g(\mu_i) = x_i^T \beta
+$$
+
+* Exponential Family
+* Link Function
+* Linear Predictor
+
+GLM: Exponential Family
+========================================================
+
+$$
+f(y_i; \theta_i, \phi)=\text{exp} \left[ \frac{y_i \theta_i - b(\theta_i)}{a(\phi)} + c(y_i, \phi) \right]
+$$
+
+Examples:
+* Normal
+* Gamma
+* Poisson
+* Binomial
+
